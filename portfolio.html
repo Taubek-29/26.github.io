@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Портфолио | Презентация</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6e8efb;
+            --primary-dark: #5a7df5;
+            --secondary: #a777e3;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            --font-heading: 'Inter', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: #f5f7fa;
+            color: var(--dark);
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+
+        /* Контейнер презентации */
+        .portfolio-presentation {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Шапка */
+        .presentation-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: var(--font-heading);
+        }
+
+        .edit-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-body);
+        }
+
+        .edit-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Основное содержимое */
+        .presentation-container {
+            flex: 1;
+            display: flex;
+            position: relative;
+        }
+
+        /* Боковая панель */
+        .presentation-sidebar {
+            width: 350px;
+            background: white;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 5;
+            transform: translateX(-100%);
+            transition: var(--transition);
+            overflow-y: auto;
+        }
+
+        .presentation-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+
+        .sidebar-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            font-family: var(--font-heading);
+        }
+
+        .close-sidebar {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--dark);
+            transition: var(--transition);
+        }
+
+        .close-sidebar:hover {
+            color: var(--primary);
+        }
+
+        .sidebar-section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .sidebar-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        /* Настройки тем */
+        .theme-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .theme-option {
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-preview {
+            width: 100%;
+            height: 80px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            border: 3px solid transparent;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-preview::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+        }
+
+        .theme-option.active .theme-preview {
+            border-color: var(--primary);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .theme-name {
+            font-size: 0.9rem;
+            text-align: center;
+            color: var(--dark);
+        }
+
+        /* Настройки шрифтов */
+        .font-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .font-option {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #eee;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .font-option:hover {
+            border-color: var(--primary);
+        }
+
+        .font-option.active {
+            border-color: var(--primary);
+            background: rgba(110, 142, 251, 0.1);
+        }
+
+        .font-sample {
+            font-size: 1rem;
+        }
+
+        /* Настройки анимаций */
+        .animation-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .animation-option {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #eee;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .animation-option:hover {
+            border-color: var(--primary);
+        }
+
+        .animation-option.active {
+            border-color: var(--primary);
+            background: rgba(110, 142, 251, 0.1);
+        }
+
+        /* Редактирование текста */
+        .text-edit-section textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-family: var(--font-body);
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 10px;
+        }
+
+        .save-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+        }
+
+        .save-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Слайды */
+        .slides-container {
+            flex: 1;
+            padding: 40px 5%;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
+        .slide {
+            max-width: 1000px;
+            margin: 0 auto 40px;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            scroll-snap-align: start;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        /* Стили для разных слайдов */
+        .welcome-slide {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+        }
+
+        .welcome-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 40px;
+            max-width: 700px;
+            line-height: 1.6;
+        }
+
+        .welcome-cta {
+            margin-top: 50px;
+        }
+
+        .about-content {
+            display: flex;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .about-text {
+            flex: 1;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .skills-container {
+            flex: 0 0 300px;
+        }
+
+        .skills-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            font-family: var(--font-heading);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .skill {
+            background: rgba(110, 142, 251, 0.1);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .skill:hover {
+            background: rgba(110, 142, 251, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .projects-slide h2 {
+            margin-bottom: 40px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .project-card {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 25px;
+            transition: var(--transition);
+            border: 1px solid #eee;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+
+        .project-card h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-family: var(--font-heading);
+        }
+
+        .project-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .contact-slide h2 {
+            margin-bottom: 30px;
+        }
+
+        .contact-info {
+            margin-top: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 12px;
+            transition: var(--transition);
+            border: 1px solid #eee;
+        }
+
+        .contact-item:hover {
+            transform: translateX(10px);
+            background: rgba(110, 142, 251, 0.1);
+            border-color: var(--primary);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .contact-details {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 5px;
+        }
+
+        .contact-value {
+            font-size: 1.1rem;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        /* Навигация */
+        .slide-nav {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(110, 142, 251, 0.4);
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(110, 142, 251, 0.5);
+        }
+
+        .nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Кнопка настроек */
+        .settings-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--dark);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            z-index: 100;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+
+        .settings-btn:hover {
+            transform: rotate(30deg) scale(1.1);
+            background: var(--primary);
+        }
+
+        /* Индикатор прогресса */
+        .progress-indicator {
+            position: fixed;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(110, 142, 251, 0.3);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .progress-dot.active {
+            background: var(--primary);
+            transform: scale(1.3);
+        }
+
+        .progress-dot::after {
+            content: attr(data-title);
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--dark);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .progress-dot:hover::after {
+            opacity: 1;
+            right: 25px;
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .skills-container {
+                flex: 1;
+                margin-top: 30px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .welcome-title {
+                font-size: 2.8rem;
+            }
+            
+            .slide {
+                padding: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .presentation-sidebar {
+                width: 300px;
+                padding: 25px;
+            }
+            
+            .welcome-title {
+                font-size: 2.4rem;
+            }
+            
+            .welcome-subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .slide {
+                padding: 30px;
+            }
+            
+            .progress-indicator {
+                right: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .welcome-title {
+                font-size: 2rem;
+            }
+            
+            .welcome-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .slide {
+                padding: 25px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .contact-icon {
+                margin: 0 auto;
+            }
+            
+            .nav-btn, .settings-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1rem;
+            }
+            
+            .progress-indicator {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="portfolio-presentation">
+        <!-- Шапка -->
+        <header class="presentation-header">
+            <div class="logo">Мое Портфолио</div>
+            <button class="edit-btn" onclick="window.location.href='index.html'">
+                <i class="fas fa-edit"></i> Редактировать
+            </button>
+        </header>
+
+        <!-- Основное содержимое -->
+        <div class="presentation-container">
+            <!-- Боковая панель -->
+            <aside class="presentation-sidebar">
+                <div class="sidebar-header">
+                    <h3 class="sidebar-title"><i class="fas fa-cog"></i> Настройки презентации</h3>
+                    <button class="close-sidebar">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <!-- Настройки темы -->
+                <div class="sidebar-section">
+                    <h4 class="section-title"><i class="fas fa-palette"></i> Цветовая тема</h4>
+                    <div class="theme-options">
+                        <div class="theme-option active" data-theme="minimal">
+                            <div class="theme-preview" style="background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);"></div>
+                            <span class="theme-name">Минимализм</span>
+                        </div>
+                        <div class="theme-option" data-theme="creative">
+                            <div class="theme-preview" style="background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);"></div>
+                            <span class="theme-name">Креативный</span>
+                        </div>
+                        <div class="theme-option" data-theme="tech">
+                            <div class="theme-preview" style="background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);"></div>
+                            <span class="theme-name">Технологичный</span>
+                        </div>
+                        <div class="theme-option" data-theme="elegant">
+                            <div class="theme-preview" style="background: linear-gradient(135deg, #614385 0%, #516395 100%);"></div>
+                            <span class="theme-name">Элегантный</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Настройки шрифтов -->
+                <div class="sidebar-section">
+                    <h4 class="section-title"><i class="fas fa-font"></i> Шрифты</h4>
+                    <div class="font-options">
+                        <div class="font-option active" data-font="inter">
+                            <div class="font-sample" style="font-family: 'Inter', sans-serif;">Inter - Современный шрифт</div>
+                        </div>
+                        <div class="font-option" data-font="montserrat">
+                            <div class="font-sample" style="font-family: 'Montserrat', sans-serif;">Montserrat - Элегантный шрифт</div>
+                        </div>
+                        <div class="font-option" data-font="roboto">
+                            <div class="font-sample" style="font-family: 'Roboto', sans-serif;">Roboto - Универсальный шрифт</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Настройки анимаций -->
+                <div class="sidebar-section">
+                    <h4 class="section-title"><i class="fas fa-film"></i> Анимации</h4>
+                    <div class="animation-options">
+                        <div class="animation-option active" data-animation="fade">
+                            <i class="fas fa-fade"></i> Плавное появление
+                        </div>
+                        <div class="animation-option" data-animation="slide">
+                            <i class="fas fa-sliders-h"></i> Скольжение
+                        </div>
+                        <div class="animation-option" data-animation="zoom">
+                            <i class="fas fa-search-plus"></i> Увеличение
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Редактирование текста -->
+                <div class="sidebar-section text-edit-section">
+                    <h4 class="section-title"><i class="fas fa-edit"></i> Редактировать текст</h4>
+                    <textarea id="about-text-edit" placeholder="Введите текст о себе..."></textarea>
+                    <button class="save-btn" id="save-text-btn">
+                        <i class="fas fa-save"></i> Сохранить изменения
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Слайды -->
+            <main class="slides-container">
+                <!-- Слайд 1: Приветствие -->
+                <section class="slide welcome-slide active">
+                    <h1 class="welcome-title">Добро пожаловать в моё портфолио</h1>
+                    <p class="welcome-subtitle" id="welcome-subtitle">Я [Имя], [Профессия] с опытом в [сфере деятельности]</p>
+                    <div class="welcome-cta">
+                        <button class="nav-btn" onclick="nextSlide()" title="Далее">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Слайд 2: Обо мне -->
+                <section class="slide about-slide">
+                    <h2>Обо мне</h2>
+                    <div class="about-content">
+                        <div class="about-text" id="about-text">
+                            Я профессиональный [профессия] с более чем [X] годами опыта в [сфере]. Специализируюсь на [ключевые навыки]. Моя страсть к [специализации] позволяет мне создавать [тип работ], которые [результат для клиента].<br><br>
+                            В своей работе я уделяю особое внимание [ключевые принципы], что позволяет достигать [измеримые результаты]. Имею опыт работы с такими компаниями как [примеры компаний].<br><br>
+                            Всегда открыт для новых вызовов и интересных проектов!
+                        </div>
+                        <div class="skills-container">
+                            <h3 class="skills-title">Мои ключевые навыки</h3>
+                            <div class="skills-list" id="skills-list">
+                                <!-- Навыки будут здесь -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Слайд 3: Проекты -->
+                <section class="slide projects-slide">
+                    <h2>Мои лучшие проекты</h2>
+                    <div class="projects-grid" id="projects-grid">
+                        <!-- Проекты будут здесь -->
+                    </div>
+                </section>
+
+                <!-- Слайд 4: Контакты -->
+                <section class="slide contact-slide">
+                    <h2>Давайте сотрудничать</h2>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <div class="contact-label">Email</div>
+                                <div class="contact-value" id="contact-email">example@email.com</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <div class="contact-label">Телефон</div>
+                                <div class="contact-value" id="contact-phone">+7 (123) 456-78-90</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <div class="contact-label">Локация</div>
+                                <div class="contact-value" id="contact-location">Москва, Россия</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <div class="contact-label">Доступность</div>
+                                <div class="contact-value">Готов к новым проектам</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Индикатор прогресса -->
+        <div class="progress-indicator">
+            <div class="progress-dot active" data-title="Приветствие" data-slide="1"></div>
+            <div class="progress-dot" data-title="Обо мне" data-slide="2"></div>
+            <div class="progress-dot" data-title="Проекты" data-slide="3"></div>
+            <div class="progress-dot" data-title="Контакты" data-slide="4"></div>
+        </div>
+
+        <!-- Кнопка настроек -->
+        <button class="settings-btn" id="settings-btn">
+            <i class="fas fa-cog"></i>
+        </button>
+
+        <!-- Навигация -->
+        <div class="slide-nav">
+            <button class="nav-btn" onclick="prevSlide()" title="Назад">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="nav-btn" onclick="nextSlide()" title="Далее">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Подключаем шрифты -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <script>
+        // Получаем данные из localStorage
+        const portfolioData = JSON.parse(localStorage.getItem('portfolioData'));
+        
+        if (!portfolioData) {
+            alert('Данные не найдены. Пожалуйста, заполните форму сначала.');
+            window.location.href = 'index.html';
+        }
+
+        // Текущий слайд
+        let currentSlide = 1;
+        const totalSlides = 4;
+
+        // DOM элементы
+        const slides = document.querySelectorAll('.slide');
+        const sidebar = document.querySelector('.presentation-sidebar');
+        const settingsBtn = document.getElementById('settings-btn');
+        const progressDots = document.querySelectorAll('.progress-dot');
+        const aboutTextEdit = document.getElementById('about-text-edit');
+        const saveTextBtn = document.getElementById('save-text-btn');
+
+        // Заполняем данные
+        document.getElementById('welcome-subtitle').textContent = 
+            `Я ${portfolioData.name}, ${portfolioData.job}`;
+        document.getElementById('about-text').textContent = portfolioData.about || 
+            `Я профессиональный ${portfolioData.job} с опытом в своей сфере. ` +
+            `Специализируюсь на ${portfolioData.skills.slice(0, 2).join(', ')}. ` +
+            `Моя страсть к созданию качественных продуктов позволяет мне достигать отличных результатов для клиентов.`;
+        
+        document.getElementById('contact-email').textContent = portfolioData.email;
+        document.getElementById('contact-phone').textContent = portfolioData.phone || '+7 (XXX) XXX-XX-XX';
+        document.getElementById('contact-location').textContent = portfolioData.location || 'Москва, Россия';
+
+        // Заполняем навыки
+        const skillsList = document.getElementById('skills-list');
+        portfolioData.skills.forEach(skill => {
+            const skillElement = document.createElement('div');
+            skillElement.className = 'skill';
+            skillElement.textContent = skill;
+            skillsList.appendChild(skillElement);
+        });
+
+        // Заполняем проекты
+        const projectsGrid = document.getElementById('projects-grid');
+        portfolioData.projects.forEach((project, index) => {
+            const projectCard = document.createElement('div');
+            projectCard.className = 'project-card';
+            projectCard.innerHTML = `
+                <h3>${project}</h3>
+                <p>${getProjectDescription(index)}</p>
+            `;
+            projectsGrid.appendChild(projectCard);
+        });
+
+        // Генерация описаний проектов
+        function getProjectDescription(index) {
+            const descriptions = [
+                `Полный цикл разработки с использованием современных технологий. Проект включал ${['анализ требований', 'проектирование', 'разработку', 'тестирование', 'внедрение'][index % 5]}.`,
+                `Клиентоориентированное решение, которое помогло заказчику ${['увеличить конверсию', 'оптимизировать процессы', 'автоматизировать работу', 'улучшить пользовательский опыт'][index % 4]} на ${Math.floor(Math.random() * 50) + 30}%.`,
+                `Инновационный подход к ${['веб-разработке', 'мобильным приложениям', 'дизайну интерфейсов', 'системной архитектуре'][index % 4]}. Получил положительные отзывы от заказчика.`
+            ];
+            return descriptions[index % descriptions.length];
+        }
+
+        // Функции навигации
+        function showSlide(n) {
+            // Скрываем все слайды
+            slides.forEach(slide => slide.classList.remove('active'));
+            progressDots.forEach(dot => dot.classList.remove('active'));
+            
+            // Показываем нужный слайд
+            slides[n - 1].classList.add('active');
+            progressDots[n - 1].classList.add('active');
+            currentSlide = n;
+            
+            // Прокручиваем к слайду
+            slides[n - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                showSlide(currentSlide + 1);
+            } else {
+                showSlide(1); // Циклическая навигация
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                showSlide(currentSlide - 1);
+            } else {
+                showSlide(totalSlides); // Циклическая навигация
+            }
+        }
+
+        // Открытие/закрытие боковой панели
+        settingsBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            // Загружаем текущий текст в редактор
+            aboutTextEdit.value = document.getElementById('about-text').textContent;
+        });
+
+        document.querySelector('.close-sidebar').addEventListener('click', () => {
+            sidebar.classList.remove('open');
+        });
+
+        // Смена темы
+        document.querySelectorAll('.theme-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Применяем тему
+                const theme = this.dataset.theme;
+                document.body.className = theme;
+                
+                // Сохраняем выбор в localStorage
+                localStorage.setItem('portfolioTheme', theme);
+            });
+        });
+
+        // Смена шрифтов
+        document.querySelectorAll('.font-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.font-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                
+                const font = this.dataset.font;
+                document.documentElement.style.setProperty('--font-heading', getFontFamily(font));
+                document.documentElement.style.setProperty('--font-body', getFontFamily(font));
+                
+                // Сохраняем выбор в localStorage
+                localStorage.setItem('portfolioFont', font);
+            });
+        });
+
+        function getFontFamily(font) {
+            const fonts = {
+                'inter': "'Inter', sans-serif",
+                'montserrat': "'Montserrat', sans-serif",
+                'roboto': "'Roboto', sans-serif"
+            };
+            return fonts[font] || fonts['inter'];
+        }
+
+        // Смена анимаций
+        document.querySelectorAll('.animation-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.animation-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                
+                const animation = this.dataset.animation;
+                // Здесь можно добавить логику применения анимаций
+                localStorage.setItem('portfolioAnimation', animation);
+            });
+        });
+
+        // Редактирование текста
+        saveTextBtn.addEventListener('click', function() {
+            const newText = aboutTextEdit.value;
+            document.getElementById('about-text').textContent = newText;
+            
+            // Сохраняем изменения
+            if (!portfolioData.about) portfolioData.about = '';
+            portfolioData.about = newText;
+            localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
+            
+            // Показываем уведомление
+            showNotification('Текст успешно сохранён!');
+        });
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.left = '50%';
+            notification.style.transform = 'translateX(-50%)';
+            notification.style.backgroundColor = 'var(--primary)';
+            notification.style.color = 'white';
+            notification.style.padding = '12px 24px';
+            notification.style.borderRadius = '50px';
+            notification.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+            notification.style.zIndex = '1000';
+            notification.style.animation = 'fadeIn 0.3s ease-out';
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'fadeIn 0.3s ease-out reverse';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Навигация по точкам прогресса
+        progressDots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                const slideNum = parseInt(this.dataset.slide);
+                showSlide(slideNum);
+            });
+        });
+
+        // Навигация клавиатурой
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'Escape') sidebar.classList.remove('open');
+        });
+
+        // Загрузка сохраненных настроек
+        function loadSettings() {
+            // Тема
+            const savedTheme = localStorage.getItem('portfolioTheme') || 'minimal';
+            document.querySelector(`.theme-option[data-theme="${savedTheme}"]`).click();
+            
+            // Шрифт
+            const savedFont = localStorage.getItem('portfolioFont') || 'inter';
+            document.querySelector(`.font-option[data-font="${savedFont}"]`).click();
+            
+            // Анимация
+            const savedAnimation = localStorage.getItem('portfolioAnimation') || 'fade';
+            document.querySelector(`.animation-option[data-animation="${savedAnimation}"]`).click();
+        }
+
+        // Инициализация
+        showSlide(1);
+        loadSettings();
+    </script>
+</body>
+</html>
